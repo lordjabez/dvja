@@ -44,9 +44,6 @@ pipeline {
     always {
       archiveArtifacts artifacts: 'zap-report.html', fingerprint: true
     }
-  }
-
-  post {
     always {
       recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
       recordIssues enabledForFailure: true, tool: checkStyle()
