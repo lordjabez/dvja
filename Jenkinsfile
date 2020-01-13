@@ -23,6 +23,11 @@ pipeline {
         dependencyCheckPublisher pattern: ''
       }
     }
+    stage('Scan for vulnerabilities') {
+      steps {
+        sh 'java -jar /var/lib/jenkins/workspace/dvja/target/dvja-1.0-SNAPSHOT.war && zap-cli quick-scan --self-contained --spider -r http://127.0.0.1 && zap-cli report -o zap-report.html -f html'
+      }
+    }
     stage('Publish to S3') {
       steps {
         sh "aws s3 cp /var/lib/jenkins/workspace/dvja/target/dvja-1.0-SNAPSHOT.war s3://ako20-buildartifacts-16n3i2hlt458h/dvja-1.0-SNAPSHOT.war"
@@ -35,7 +40,11 @@ pipeline {
     }
   }
 
-
+  post {
+    always {
+      archiveArtifacts artifacts: 'zap-report.html', fingerprint: true
+    }
+  }
 
   post {
     always {
