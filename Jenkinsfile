@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Analysis') {
       steps {
-        sh "mvn --batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd spotbugs:spotbugs"
+        sh "mvn --batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd com.github.spotbugs:spotbugs-maven-plugin:3.1.7:spotbugs"
       }
     }
     stage('Check dependencies') {
