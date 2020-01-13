@@ -15,6 +15,14 @@
         <spring.version>3.0.5.RELEASE</spring.version>
     </properties>
 
+    <execution>
+    <id>verify</id>
+    <phase>verify</phase>
+    <goals>
+        <goal>check</goal>
+    </goals>
+    </execution>
+
     <dependencies>
 
         <dependency>
